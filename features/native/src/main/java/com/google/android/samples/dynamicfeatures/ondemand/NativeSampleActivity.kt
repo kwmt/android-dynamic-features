@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.android.samples.dynamicfeatures.ondemand
+package net.kwmt27.samples.dynamicfeatures.ondemand
 
 import android.os.Bundle
 import android.widget.TextView
-import com.google.android.samples.dynamicfeatures.ondemand.ccode.R
+import net.kwmt27.samples.dynamicfeatures.ondemand.ccode.R
 import androidx.appcompat.app.AppCompatActivity
 
 /** A simple activity displaying some text coming through via JNI. */

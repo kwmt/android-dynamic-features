@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.android.samples.dynamicfeatures.ondemand
+package net.kwmt27.samples.dynamicfeatures.ondemand
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.samples.dynamicfeatures.ondemand.kotlin.R
+import net.kwmt27.samples.dynamicfeatures.ondemand.kotlin.R
 
 /** A simple Activity displaying some text, written in Kotlin. */
 class KotlinSampleActivity : AppCompatActivity() {

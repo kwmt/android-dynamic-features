@@ -17,10 +17,10 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
-    package="com.google.android.samples.dynamicfeatures.ondemand.kotlin">
+    package="net.kwmt27.samples.dynamicfeatures.ondemand.kotlin">
 
     <application>
-        <activity android:name="com.google.android.samples.dynamicfeatures.ondemand.KotlinSampleActivity">
+        <activity android:name="net.kwmt27.samples.dynamicfeatures.ondemand.KotlinSampleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>

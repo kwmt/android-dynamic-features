@@ -28,7 +28,7 @@ buildscript {
     ]
 
     ext.names = [
-            'applicationId': 'com.google.android.samples.dynamicfeatures.ondemand'
+            'applicationId': 'net.kwmt27.samples.dynamicfeatures'
     ]
 
     repositories {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.android.samples.dynamicfeatures
+package net.kwmt27.samples.dynamicfeatures
 
 import android.content.Intent
 import android.os.Bundle
@@ -26,8 +26,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
+import net.kwmt27.samples.dynamicfeatures.R
 
-private const val packageName = "com.google.android.samples.dynamicfeatures.ondemand"
+private const val packageName = "net.kwmt27.samples.dynamicfeatures.ondemand"
 private const val kotlinSampleClassname = "$packageName.KotlinSampleActivity"
 private const val javaSampleClassname = "$packageName.JavaSampleActivity"
 private const val nativeSampleClassname = "$packageName.NativeSampleActivity"
