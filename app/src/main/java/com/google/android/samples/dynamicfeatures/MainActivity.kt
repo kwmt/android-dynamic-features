@@ -46,6 +46,8 @@ class MainActivity : AppCompatActivity() {
     }
     private lateinit var manager: SplitInstallManager
 
+    private val moduleAssets by lazy { getString(R.string.module_assets) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -56,19 +58,23 @@ class MainActivity : AppCompatActivity() {
 
     /** Display assets loaded from the assets feature module. */
     private fun displayAssets() {
-        // Get the asset manager with a refreshed context, to access content of newly installed apk.
-        val assetManager = createPackageContext(packageName, 0).assets
-        // Now treat it like any other asset file.
-        val assets = assetManager.open("assets.txt")
-        val assetContent = assets.bufferedReader()
-                .use {
-                    it.readText()
-                }
+        if(manager.installedLanguages.contains(moduleAssets)) {
+            // Get the asset manager with a refreshed context, to access content of newly installed apk.
+            val assetManager = createPackageContext(packageName, 0).assets
+            // Now treat it like any other asset file.
+            val assets = assetManager.open("assets.txt")
+            val assetContent = assets.bufferedReader()
+                    .use {
+                        it.readText()
+                    }
 
-        AlertDialog.Builder(this)
-                .setTitle("Asset content")
-                .setMessage(assetContent)
-                .show()
+            AlertDialog.Builder(this)
+                    .setTitle("Asset content")
+                    .setMessage(assetContent)
+                    .show()
+        } else {
+            toastAndLog("The assets module is not installed")
+        }
     }
 
     /** Launch an activity by its class name. */
