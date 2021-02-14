@@ -40,6 +40,8 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+
+    dynamicFeatures = [':assets']
 }
 
 dependencies {
@@ -47,7 +49,7 @@ dependencies {
     implementation project(':kotlin')
     implementation project(':java')
     implementation project(':native')
-    implementation project(':assets')
+//    implementation project(':assets')
 
     // Libraries which can be re-used in other modules should use the `api` keyword.
     // This way they can be shared with dependent feature modules.
