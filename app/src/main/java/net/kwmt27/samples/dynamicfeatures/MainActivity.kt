@@ -20,13 +20,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.Group
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
-import net.kwmt27.samples.dynamicfeatures.R
 
 private const val packageName = "net.kwmt27.samples.dynamicfeatures.ondemand"
 private const val kotlinSampleClassname = "$packageName.KotlinSampleActivity"
@@ -50,6 +52,11 @@ class MainActivity : AppCompatActivity() {
 
     private val moduleAssets by lazy { getString(R.string.module_assets) }
 
+    private lateinit var progress: Group
+    private lateinit var buttons: Group
+    private lateinit var progressBar: ProgressBar
+    private lateinit var progressText: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -60,7 +67,9 @@ class MainActivity : AppCompatActivity() {
 
     /** Display assets loaded from the assets feature module. */
     private fun displayAssets() {
-        if(manager.installedLanguages.contains(moduleAssets)) {
+        updateProgressMessage("Loading module $moduleAssets")
+        if (manager.installedLanguages.contains(moduleAssets)) {
+            updateProgressMessage("Already installed")
             // Get the asset manager with a refreshed context, to access content of newly installed apk.
             val assetManager = createPackageContext(packageName, 0).assets
             // Now treat it like any other asset file.
@@ -74,16 +83,24 @@ class MainActivity : AppCompatActivity() {
                     .setTitle("Asset content")
                     .setMessage(assetContent)
                     .show()
+            displayButtons()
         } else {
+            updateProgressMessage("Starting install for $moduleAssets")
             toastAndLog("The assets module is not installed")
 
             val request = SplitInstallRequest.newBuilder()
                     .addModule(moduleAssets)
                     .build()
             manager.startInstall(request)
-                    .addOnCompleteListener { toastAndLog("Module $moduleAssets installed")}
-                    .addOnSuccessListener { "Loading $moduleAssets" }
-                    .addOnFailureListener { toastAndLog("Error loading $moduleAssets") }
+                    .addOnCompleteListener {
+                        toastAndLog("Module $moduleAssets installed")
+                        displayAssets()
+                    }
+                    .addOnSuccessListener { toastAndLog("Loading $moduleAssets") }
+                    .addOnFailureListener {
+                        toastAndLog("Error loading $moduleAssets")
+                        displayButtons()
+                    }
         }
     }
 
@@ -97,6 +114,11 @@ class MainActivity : AppCompatActivity() {
 
     /** Set up all view variables. */
     private fun initializeViews() {
+        buttons = findViewById(R.id.buttons)
+        progress = findViewById(R.id.progress)
+        progressBar = findViewById(R.id.progress_bar)
+        progressText = findViewById(R.id.progress_text)
+
         setupClickListener()
     }
 
@@ -111,6 +133,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun setClickListener(id: Int, listener: View.OnClickListener) {
         findViewById<View>(id).setOnClickListener(listener)
+    }
+
+    private fun updateProgressMessage(message: String) {
+        if (progress.visibility != View.VISIBLE) displayProgress()
+        progressText.text = message
+    }
+
+    private fun displayProgress() {
+        progress.visibility = View.VISIBLE
+        buttons.visibility = View.GONE
+    }
+
+    private fun displayButtons() {
+        progress.visibility = View.GONE
+        buttons.visibility = View.VISIBLE
     }
 }
 
